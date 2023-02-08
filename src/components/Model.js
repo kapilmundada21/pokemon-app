@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const Model = () => {
+export const Model = (props) => {
   return (
-    <div>Model</div>
+    <div>
+      <button onClick={props.closeModel}> Model </button>
+    </div>
   )
 }
