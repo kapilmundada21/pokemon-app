@@ -91,7 +91,7 @@ export const Model = ({ pokemonName, onClose }) => {
 
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
-      <div className="bg-cyan-100 bg-opacity-90 p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
+      <div className="bg-[#deeded] bg-opacity-90 p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
         <div className="flex flex-row mb-16">
           <div className="flex w-1/3 mr-10">
             <Card pokemonInfo={{}} image={pokemon.image}></Card>
