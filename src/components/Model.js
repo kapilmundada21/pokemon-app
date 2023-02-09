@@ -60,7 +60,7 @@ export const Model = ({ pokemonName, onClose }) => {
       return textObjext.flavor_text;
     });
 
-    console.log(speciesInfo.evolves_from_species);
+    // console.log(speciesInfo.evolves_from_species);
     pokemonInfo["evolChain"] = [];
     while (speciesInfo !== null) {
       pokemonInfo["evolChain"].unshift({
@@ -75,7 +75,7 @@ export const Model = ({ pokemonName, onClose }) => {
         : null;
     }
     setPokemon(pokemonInfo);
-    console.log(pokemonInfo);
+    // console.log(pokemonInfo);
   };
 
   const shortenedText = (text) => {

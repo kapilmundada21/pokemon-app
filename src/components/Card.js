@@ -10,7 +10,7 @@ function Card({ pokemonInfo, image, selectCard }) {
       key={pokemonInfo.name}
       name={pokemonInfo.name}
       onClick={selectCard}
-      className="h-84 text-center border-2 border-dashed rounded-lg p-5 justify-items-center border-black bg-[#edc2c4]"
+      className={`h-84 text-center border-2 border-dashed rounded-lg p-5 justify-items-center border-black bg-[#edc2c4]`}
     >
       <div>
         <img src={image} className="h-36 m-4" alt="pokemon" />
