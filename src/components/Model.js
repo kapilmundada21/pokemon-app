@@ -174,7 +174,8 @@ export const Model = ({ pokemonName, onClose }) => {
                     <span className="">{camelCaseReduce(stat.stat.name)}</span>
                     <div className="col-span-3 h-fill bg-gray-200 m-1 align-baseline">
                       <div
-                        className={`object-cover px-2 text-xs text-white bg-indigo-900 w-20`}
+                        className={`object-cover px-2 text-xs text-white bg-indigo-900 `}
+                        style={{ width: stat.base_stat + "%" }}
                       >
                         {stat.base_stat}
                       </div>
