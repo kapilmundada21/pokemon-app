@@ -16,6 +16,7 @@ export const Model = ({ pokemonName, onClose }) => {
 
   useEffect(() => {
     fetchPokemonData(pokemonName);
+    // eslint-disable-next-line
   }, []);
 
   const fetchPokemonData = async () => {
@@ -157,9 +158,16 @@ export const Model = ({ pokemonName, onClose }) => {
               <h3 className="font-bold">Egg Groups</h3>
               {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
             </div>
-            <div>
+            <div className="flex flex-col space-y-1">
               <h3 className="font-bold">Weak Against</h3>
-              {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
+              <div className="flex space-x-2 items-center" >
+                {pokemon.egg_groups && (pokemon.egg_groups).map((items) => {
+                  return (<span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+                    {items}
+                  </span>)
+                }
+                )}
+              </div>
             </div>
           </div>
         </div>

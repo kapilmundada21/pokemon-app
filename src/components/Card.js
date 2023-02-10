@@ -22,7 +22,7 @@ function Card({ pokemonInfo, image, selectCard }) {
         backgroundImage : `linear-gradient(${color[pokemonInfo.id - 1]})`
       }}
     >
-      <div>
+      <div className="flex justify-center">
         <img src={image} className="h-36 m-4" alt="pokemon" />
       </div>
       <div className="p-3">
