@@ -79,6 +79,7 @@ export const Model = ({ pokemonName, onClose }) => {
   };
 
   const shortenedText = (text) => {
+    text = text.replaceAll("\f", " ");
     return text.length > 320 ? text.slice(0, 320 - 1) + "..." : text;
   };
 
