@@ -84,10 +84,14 @@ export const Model = ({ pokemonName, onClose }) => {
     return text.length > 320 ? text.slice(0, 320 - 1) + "..." : text;
   };
 
-  const camelCaseReduce = (str) => {
+  const formatStatText = (str) => {
     str = str.replace("special-", "Sp. ");
     if (str.includes("Sp.")) str = str.replace("defense", "Def.");
     str = str.replace("attack", "Attack");
+    return camelCase(str);
+  };
+
+  const camelCase = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
@@ -136,7 +140,7 @@ export const Model = ({ pokemonName, onClose }) => {
               <h3 className="font-bold">Abilities</h3>
               {pokemon.abilities &&
                 pokemon.abilities
-                  .map((ability) => ability.ability.name)
+                  .map((ability) => camelCase(ability.ability.name))
                   .join(", ")}
             </div>
           </div>
@@ -148,8 +152,12 @@ export const Model = ({ pokemonName, onClose }) => {
             </div>
             <div>
               <h3 className="font-bold">Types</h3>
-              {pokemon.types &&
-                pokemon.types.map((type) => type.type.name).join(" ")}
+              <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+                {pokemon.types &&
+                  pokemon.types
+                    .map((type) => camelCase(type.type.name))
+                    .join(" ")}
+              </span>
             </div>
           </div>
 
@@ -160,13 +168,15 @@ export const Model = ({ pokemonName, onClose }) => {
             </div>
             <div className="flex flex-col space-y-1">
               <h3 className="font-bold">Weak Against</h3>
-              <div className="flex space-x-2 items-center" >
-                {pokemon.egg_groups && (pokemon.egg_groups).map((items) => {
-                  return (<span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
-                    {items}
-                  </span>)
-                }
-                )}
+              <div className="flex space-x-2 items-center">
+                {pokemon.egg_groups &&
+                  pokemon.egg_groups.map((items) => {
+                    return (
+                      <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+                        {camelCase(items)}
+                      </span>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -180,7 +190,7 @@ export const Model = ({ pokemonName, onClose }) => {
                 const statValue = stat.base_stat;
                 return (
                   <div className="grid grid-cols-4" key={stat.stat.name}>
-                    <span className="">{camelCaseReduce(stat.stat.name)}</span>
+                    <span className="">{formatStatText(stat.stat.name)}</span>
                     <div className="col-span-3 h-fill bg-gray-200 m-1 align-baseline">
                       <div
                         className={`object-cover px-2 text-xs text-white bg-indigo-900 `}
