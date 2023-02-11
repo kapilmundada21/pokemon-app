@@ -5,7 +5,6 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import Card from "./components/Card";
 
 function App() {
-  const [pokemonApi, setPokemonApi] = useState({ results: [] });
   const [openModel, setOpenModel] = useState(false);
   const [allPokemonData, setAllPokemonData] = useState([]);
   const [selectedPokemonName, setSelectedPokemonName] = useState("");
@@ -14,7 +13,6 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
   const [typeInput, setTypeInput] = useState("");
   const [genderInput, setGenderInput] = useState("Male");
-  const [statsFilter, setStatsFilter] = useState([]);
   const [filteredResult, setFilteredResult] = useState([]);
   const [statsInput, setStatsInput] = useState({
     hp: 0,
@@ -34,8 +32,7 @@ function App() {
       "special-attack": 0,
       "special-defense": 0,
     });
-
-    setStatsFilter([]);
+    setFilteredResult([]);
     setTypeInput("");
     setSearchInput("");
   };
@@ -53,7 +50,6 @@ function App() {
       )
     );
     await setFilteredResult(allPokemonData);
-    setPokemonApi(mainParsedData);
   };
 
   const toggleModel = (event) => {
@@ -77,7 +73,7 @@ function App() {
 
   const toggleTypeDropDown = () => {
     setTypeDropDown(!typeDropDown);
-    if (typeDropDown === true) setStatsDropdown = false;
+    if (typeDropDown === true) setStatsDropdown(false);
     resetStats();
   };
 
@@ -97,13 +93,11 @@ function App() {
     pokemonInformation.types.forEach((type) => {
       pokemonInfo.types = [...pokemonInfo.types, type.type.name];
     });
-    console.log(pokemonInfo);
     return pokemonInfo;
   };
 
   useEffect(() => {
     fetchData();
-    console.log(allPokemonData);
     //eslint-disable-next-line
   }, []);
   const arr = allPokemonData;
@@ -112,14 +106,16 @@ function App() {
     if (e.target.name === "search") {
       await setSearchInput(e.target.value);
       setFilteredResult(
-        allPokemonData.filter((item) => item.name.includes(searchInput))
+        allPokemonData.filter((item) => item.name.includes((e.target.value).toLowerCase()))
       );
     } else if (e.target.name === "type") {
       await setTypeInput(e.target.value);
       setFilteredResult([
         ...allPokemonData.filter((item) => item.types.includes(e.target.value)),
       ]);
-      console.log(typeInput);
+      if(e.target.value === "all"){
+        setTypeInput("");
+      }
     } else if (e.target.name === "gender") {
       setGenderInput(e.target.value);
       setFilteredResult(allPokemonData);
@@ -182,6 +178,7 @@ function App() {
                 value={typeInput}
                 onChange={handelChange}
               >
+                <option value="all">All</option>
                 <option value="normal">Normal</option>
                 <option value="poison">Poison</option>
                 <option value="fire">Fire</option>
@@ -337,7 +334,7 @@ function App() {
           !searchInput.length &&
           !typeInput.length &&
           !filteredResult.length
-            ? arr.map((items) => {
+            && arr.map((items) => {
                 return (
                   <Card
                     key={items.id}
@@ -347,8 +344,10 @@ function App() {
                   ></Card>
                 );
               })
-            : filteredResult
-            ? filteredResult.map((items, index) => {
+            }
+
+            { filteredResult
+            && filteredResult.map((items, index) => {
                 return (
                   <Card
                     key={items.id}
@@ -358,7 +357,7 @@ function App() {
                   ></Card>
                 );
               })
-            : console.log("No results")}
+              }
         </div>
       </div>
     </>

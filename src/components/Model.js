@@ -187,7 +187,6 @@ export const Model = ({ pokemonName, onClose }) => {
           <div className="grid grid-cols-2 gap-x-10 gap-y-2">
             {pokemon.stats &&
               pokemon.stats.map((stat) => {
-                const statValue = stat.base_stat;
                 return (
                   <div className="grid grid-cols-4" key={stat.stat.name}>
                     <span className="">{formatStatText(stat.stat.name)}</span>
