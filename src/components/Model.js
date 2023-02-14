@@ -5,6 +5,7 @@ import {
   BsXCircle,
   BsArrowRightCircle,
   BsArrowRight,
+  BsArrowDown
 } from "react-icons/bs";
 
 export const Model = ({ pokemonName, onClose }) => {
@@ -97,94 +98,95 @@ export const Model = ({ pokemonName, onClose }) => {
 
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
-      <div className="bg-[#deeded] bg-opacity-90 p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
-        <div className="flex flex-row mb-16">
-          <div className="flex w-1/3 mr-10">
+      <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
+        <div className="flex flex-col w-full gap-y-10 mb-8">
+          <div className="flex justify-between h-1/6">
+            <div className="font-bold  font-sans text-2xl t">
+              {pokemon.name && pokemon.name.toUpperCase()}
+            </div>
+
+            <div className="font-sans border-x-2 px-2 md:px-10 border-indigo-900 text-2xl ">
+              {("000" + pokemon.id).slice(-3)}
+            </div>
+
+            <div className="grid grid-cols-3 gap-x-2 text-2xl">
+              <button>
+                <BsArrowLeftCircle />
+              </button>
+              <button>
+                <BsXCircle onClick={handleOnClose} />
+              </button>
+              <button>
+                <BsArrowRightCircle />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0">
+          <div className="flex md:w-1/3 mr-10">
             <Card pokemonInfo={{}} image={pokemon.image}></Card>
           </div>
 
-          <div className="flex flex-col w-2/3  gap-y-10 ">
-            <div className="flex justify-between h-1/6">
-              <div className="font-bold  font-sans text-2xl t">
-                {pokemon.name && pokemon.name.toUpperCase()}
-              </div>
-              <div className="font-sans border-x-2 px-10 border-indigo-900 text-2xl ">
-                {("000" + pokemon.id).slice(-3)}
-              </div>
-              <div className="grid grid-cols-3 gap-x-2 text-2xl">
-                <button>
-                  <BsArrowLeftCircle />
-                </button>
-                <button>
-                  <BsXCircle onClick={handleOnClose} />
-                </button>
-                <button>
-                  <BsArrowRightCircle />
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-row">
-              {pokemon.flavorTexts &&
-                shortenedText(pokemon.flavorTexts.join(" "))}
+          <div className="flex flex-wrap max-w-sm">
+            {pokemon.flavorTexts &&
+              shortenedText(pokemon.flavorTexts.join(" "))}
+          </div>
+        </div>
+
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 gap-x-8 my-8">
+          <div className="">
+            <h3 className="font-bold">Height</h3>
+            {pokemon.height}
+          </div>
+
+          <div>
+            <h3 className="font-bold">Abilities</h3>
+            {pokemon.abilities &&
+              pokemon.abilities
+                .map((ability) => camelCase(ability.ability.name))
+                .join(", ")}
+          </div>
+
+          <div className="">
+            <h3 className="font-bold">Weight</h3>
+            {pokemon.weight / 10 + "Kg"}
+          </div>
+
+          <div>
+            <h3 className="font-bold">Types</h3>
+            <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+              {pokemon.types &&
+                pokemon.types
+                  .map((type) => camelCase(type.type.name))
+                  .join(" ")}
+            </span>
+          </div>
+
+          <div className="">
+            <h3 className="font-bold">Egg Groups</h3>
+            {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <h3 className="font-bold">Weak Against</h3>
+            <div className="flex space-x-2">
+              {pokemon.egg_groups &&
+                pokemon.egg_groups.map((items) => {
+                  return (
+                    <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+                      {camelCase(items)}
+                    </span>
+                  );
+                })}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-row justify-between mb-16">
-          <div className="flex flex-col">
-            <div className="pb-10">
-              <h3 className="font-bold">Height</h3>
-              {pokemon.height}
-            </div>
-            <div>
-              <h3 className="font-bold">Abilities</h3>
-              {pokemon.abilities &&
-                pokemon.abilities
-                  .map((ability) => camelCase(ability.ability.name))
-                  .join(", ")}
-            </div>
-          </div>
-
-          <div className="flex flex-col">
-            <div className="pb-10">
-              <h3 className="font-bold">Weight</h3>
-              {pokemon.weight / 10 + "Kg"}
-            </div>
-            <div>
-              <h3 className="font-bold">Types</h3>
-              <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
-                {pokemon.types &&
-                  pokemon.types
-                    .map((type) => camelCase(type.type.name))
-                    .join(" ")}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-col ">
-            <div className="pb-10">
-              <h3 className="font-bold">Egg Groups</h3>
-              {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
-            </div>
-            <div className="flex flex-col space-y-1">
-              <h3 className="font-bold">Weak Against</h3>
-              <div className="flex space-x-2 items-center">
-                {pokemon.egg_groups &&
-                  pokemon.egg_groups.map((items) => {
-                    return (
-                      <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
-                        {camelCase(items)}
-                      </span>
-                    );
-                  })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-5 bg-cyan-700 bg-opacity-40 rounded-lg mb-16">
+        <div className="p-2 md:p-5 bg-cyan-700 bg-opacity-40 rounded-lg mb-8">
           <h2 className="font-bold text-1xl my-4">Stats</h2>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-2">
             {pokemon.stats &&
               pokemon.stats.map((stat) => {
                 return (
@@ -205,18 +207,21 @@ export const Model = ({ pokemonName, onClose }) => {
         </div>
 
         <div>
-          <h2 className="font-bold text-1xl">Evolution Chain</h2>
-          <div className="flex flex-row my-4">
+          <h2 className="font-bold text-xl">Evolution Chain</h2>
+          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 my-4">
             {pokemon.evolChain &&
               pokemon.evolChain.map((species, index) => {
                 return (
-                  <div key={species.nameInfo.id} className="flex">
+                  <div key={species.nameInfo.id} className="flex flex-col md:flex-row justify-center items-center">
                     <Card
                       pokemonInfo={species.nameInfo}
                       image={species.image}
                     ></Card>
                     {index !== pokemon.evolChain.length - 1 ? (
-                      <BsArrowRight className="text-5xl mx-5 h-full" />
+                      <div>
+                        <BsArrowRight className="text-5xl mx-5 h-full hidden md:block" />
+                        <BsArrowDown className="text-5xl mx-5 h-full md:hidden" />
+                      </div>
                     ) : (
                       ""
                     )}
