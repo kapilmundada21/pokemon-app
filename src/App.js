@@ -145,18 +145,18 @@ function App() {
       {openModel && (
         <Model pokemonName={selectedPokemonName} onClose={toggleModel} />
       )}
-      <div className="p-10 bg-[#deeded]">
+      <div className="p-4 md:p-10 bg-[#deeded]">
         <nav className="mb-16 space-y-4">
-          <div className="flex items-center">
-            <h1 className="p-4 border-r-2 border-black text-3xl font-bold">
+          <div className="flex flex-col md:flex-row items-center">
+            <h1 className="p-2 md:p-4 border-r-2 md:border-black text-3xl font-bold">
               Pokemon App
             </h1>
-            <span className="p-4">
+            <span className="p-2 md:p-4">
               Search for any Pokemon that exist on Planet
             </span>
           </div>
-          <div className="flex space-x-10">
-            <div className="flex flex-col w-2/5 space-y-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="flex flex-col w-full space-y-2">
               <label htmlFor="search">Search by</label>
               <input
                 type="search"
@@ -168,8 +168,7 @@ function App() {
                 className="bg-[#c9dde2] p-3 rounded-lg w-full"
               />
             </div>
-
-            <div className="flex flex-col w-1/5 space-y-2">
+            <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Type</label>
               <select
                 name="type"
@@ -187,7 +186,7 @@ function App() {
                 <option value="flying">Flying</option>
               </select>
             </div>
-            <div className="flex flex-col w-1/5 space-y-2">
+            <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Gender</label>
               <select
                 name="gender"
@@ -200,7 +199,7 @@ function App() {
                 <option value="female">Female</option>
               </select>
             </div>
-            <div className="flex flex-col w-1/5 space-y-2">
+            <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Stats</label>
               <button
                 onClick={() => {
@@ -213,7 +212,7 @@ function App() {
             </div>
           </div>
           {statsDropdown && (
-            <div className="absolute top-[28%] right-10 z-10 border-2 border-black bg-white">
+            <div className="absolute top-30 md:top-[28%] right-3 md:right-10 z-10 border-2 border-black bg-white">
               <div className="p-6">
                 <div className="flex justify-between pb-6">
                   <span className="font-bold text-xl">Select Stats</span>
@@ -232,7 +231,7 @@ function App() {
                       type="range"
                       name="hp"
                       id="hp"
-                      className="w-72"
+                      className="md:w-72"
                       value={statsInput.hp}
                       onChange={handelChange}
                     />
@@ -246,7 +245,7 @@ function App() {
                       type="range"
                       name="attack"
                       id="attack"
-                      className="w-72"
+                      className="md:w-72"
                       value={statsInput.attack}
                       onChange={handelChange}
                     />
@@ -260,7 +259,7 @@ function App() {
                       type="range"
                       name="defense"
                       id="defense"
-                      className="w-72"
+                      className="md:w-72"
                       value={statsInput.defense}
                       onChange={handelChange}
                     />
@@ -274,7 +273,7 @@ function App() {
                       type="range"
                       name="speed"
                       id="speed"
-                      className="w-72"
+                      className="md:w-72"
                       value={statsInput.speed}
                       onChange={handelChange}
                     />
@@ -288,7 +287,7 @@ function App() {
                       type="range"
                       name="special-attack"
                       id="special-attack"
-                      className="ml-6 w-72"
+                      className="ml-6 md:w-72"
                       value={statsInput["special-attack"]}
                       onChange={handelChange}
                     />
@@ -302,7 +301,7 @@ function App() {
                       type="range"
                       name="special-defense"
                       id="special-defense"
-                      className="w-72"
+                      className="md:w-72"
                       value={statsInput["special-defense"]}
                       onChange={handelChange}
                     />
@@ -329,7 +328,7 @@ function App() {
           )}
         </nav>
 
-        <div className="grid grid-cols-6 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-8">
           {arr &&
           !searchInput.length &&
           !typeInput.length &&
