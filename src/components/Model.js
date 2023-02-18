@@ -99,38 +99,39 @@ export const Model = ({ pokemonName, onClose }) => {
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
       <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
-        <div className="flex flex-col w-full gap-y-10 mb-8">
-          <div className="flex justify-between h-1/6">
-            <div className="font-bold  font-sans text-2xl t">
-              {pokemon.name && pokemon.name.toUpperCase()}
-            </div>
 
-            <div className="font-sans border-x-2 px-2 md:px-10 border-indigo-900 text-2xl ">
-              {("000" + pokemon.id).slice(-3)}
-            </div>
-
-            <div className="grid grid-cols-3 gap-x-2 text-2xl">
-              <button>
-                <BsArrowLeftCircle />
-              </button>
-              <button>
-                <BsXCircle onClick={handleOnClose} />
-              </button>
-              <button>
-                <BsArrowRightCircle />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0">
+        <div className="flex flex-col-reverse md:flex-row justify-center items-center">
           <div className="flex md:w-1/3 mr-10">
             <Card pokemonInfo={{}} image={pokemon.image}></Card>
           </div>
 
-          <div className="flex flex-wrap max-w-sm">
-            {pokemon.flavorTexts &&
-              shortenedText(pokemon.flavorTexts.join(" "))}
+          <div className="flex flex-col w-full gap-y-10 mb-8">
+            <div className="flex justify-between h-1/3">
+              <div className="font-bold font-sans text-2xl">
+                {pokemon.name && pokemon.name.toUpperCase()}
+              </div>
+
+              <div className="font-sans border-x-2 px-2 md:px-10 border-indigo-900 text-2xl ">
+                {("000" + pokemon.id).slice(-3)}
+              </div>
+
+              <div className="grid grid-cols-3 gap-x-2 text-2xl">
+                <button>
+                  <BsArrowLeftCircle />
+                </button>
+                <button>
+                  <BsXCircle onClick={handleOnClose} />
+                </button>
+                <button>
+                  <BsArrowRightCircle />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap max-w-xl">
+              {pokemon.flavorTexts &&
+                shortenedText(pokemon.flavorTexts.join(" "))}
+            </div>
           </div>
         </div>
 
@@ -141,17 +142,22 @@ export const Model = ({ pokemonName, onClose }) => {
             {pokemon.height}
           </div>
 
+          <div className="">
+            <h3 className="font-bold">Weight</h3>
+            {pokemon.weight / 10 + "Kg"}
+          </div>
+
+          <div className="">
+            <h3 className="font-bold">Egg Groups</h3>
+            {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
+          </div>
+
           <div>
             <h3 className="font-bold">Abilities</h3>
             {pokemon.abilities &&
               pokemon.abilities
                 .map((ability) => camelCase(ability.ability.name))
                 .join(", ")}
-          </div>
-
-          <div className="">
-            <h3 className="font-bold">Weight</h3>
-            {pokemon.weight / 10 + "Kg"}
           </div>
 
           <div>
@@ -162,11 +168,6 @@ export const Model = ({ pokemonName, onClose }) => {
                   .map((type) => camelCase(type.type.name))
                   .join(" ")}
             </span>
-          </div>
-
-          <div className="">
-            <h3 className="font-bold">Egg Groups</h3>
-            {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
           </div>
 
           <div className="flex flex-col space-y-1">
@@ -184,7 +185,7 @@ export const Model = ({ pokemonName, onClose }) => {
           </div>
         </div>
 
-        <div className="p-2 md:p-5 bg-cyan-700 bg-opacity-40 rounded-lg mb-8">
+        <div className="p-2 md:p-5 bg-[#b0d2d2] rounded-lg mb-8">
           <h2 className="font-bold text-1xl my-4">Stats</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-2">
             {pokemon.stats &&
