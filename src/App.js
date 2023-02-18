@@ -162,8 +162,8 @@ function App() {
               Search for any Pokemon that exist on Planet
             </span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{gridTemplateColumns : "3fr 1fr 1fr 1fr"}}>
-            <div className="flex flex-col w-full space-y-2">
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+            <div className="md:col-span-3 flex flex-col w-full space-y-2">
               <label htmlFor="search">Search by</label>
               <input
                 type="search"
@@ -217,7 +217,7 @@ function App() {
 
               <div className="">
                 <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={genderUIDropdown}> 
-                  <span>Male <span className="font-bold">+5 More</span></span>
+                  <span>Male <span className="font-bold">+2 More</span></span>
                   <IoIosArrowDown />
                 </button>
                 <div id="genderUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
