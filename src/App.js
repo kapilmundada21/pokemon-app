@@ -77,6 +77,13 @@ function App() {
     resetStats();
   };
 
+  const typeUIDropdown = () => {
+    document.getElementById("typeUIDropdown").classList.toggle("hidden")
+  }
+  const genderUIDropdown = () => {
+    document.getElementById("genderUIDropdown").classList.toggle("hidden")
+  }
+
   const getPokemonDataforFilters = async (pokemonURL) => {
     let pokemonInformation = await (await fetch(pokemonURL)).json();
     const pokemonInfo = {
@@ -155,7 +162,7 @@ function App() {
               Search for any Pokemon that exist on Planet
             </span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{gridTemplateColumns : "3fr 1fr 1fr 1fr"}}>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="search">Search by</label>
               <input
@@ -170,7 +177,26 @@ function App() {
             </div>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Type</label>
-              <select
+
+              <div className="">
+                <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={typeUIDropdown}> 
+                  <span>All <span className="font-bold">+5 More</span></span>
+                  <IoIosArrowDown />
+                </button>
+                <div id="typeUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
+                  <ul className="">
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="all"/><span> All</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="normal"/><span> Normal</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="poison"/><span> Poison</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="fire"/><span> Fire</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="water"/><span> Water</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="bug"/><span> Bug</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="flying"/><span> Flying</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* <select
                 name="type"
                 id="type"
                 className="bg-[#c9dde2] p-3 rounded-lg w-full"
@@ -182,22 +208,36 @@ function App() {
                 <option value="poison">Poison</option>
                 <option value="fire">Fire</option>
                 <option value="water">Water</option>
-                <option value="bug">bug</option>
+                <option value="bug">Bug</option>
                 <option value="flying">Flying</option>
-              </select>
+              </select> */}
             </div>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Gender</label>
-              <select
+
+              <div className="">
+                <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={genderUIDropdown}> 
+                  <span>Male <span className="font-bold">+5 More</span></span>
+                  <IoIosArrowDown />
+                </button>
+                <div id="genderUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
+                  <ul className="">
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="gender" onChange={handelChange} value="male"/><span> Male</span></li>
+                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="gender" onChange={handelChange} value="female"/><span> Female</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* <select
                 name="gender"
                 id="gender"
                 className="bg-[#c9dde2] p-3 rounded-lg w-full"
                 value={genderInput}
                 onChange={handelChange}
               >
-                <option value="male">Male</option>
+                <option value="male">Male +2 More</option>
                 <option value="female">Female</option>
-              </select>
+              </select> */}
             </div>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Stats</label>
@@ -207,7 +247,7 @@ function App() {
                 }}
                 className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full text-left"
               >
-                HP +5 More <IoIosArrowDown />{" "}
+                <div>HP <span className="font-bold">+5 More</span></div> <IoIosArrowDown />{" "}
               </button>
             </div>
           </div>
