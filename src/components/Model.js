@@ -5,11 +5,23 @@ import {
   BsXCircle,
   BsArrowRightCircle,
   BsArrowRight,
-  BsArrowDown
+  BsArrowDown,
 } from "react-icons/bs";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 export const Model = ({ pokemonName, onClose }) => {
   const [pokemon, setPokemon] = useState({});
+  const [anchor, setAnchor] = useState(null);
+  const openPopover = (event) => {
+    setAnchor(event.currentTarget.parentNode.parentNode.parentNode);
+    console.log();
+  };
+
+  const closePopover = (event) => {
+    setAnchor(null);
+  };
 
   const handleOnClose = () => {
     onClose();
@@ -62,11 +74,12 @@ export const Model = ({ pokemonName, onClose }) => {
       return textObjext.flavor_text;
     });
 
+    pokemonInfo["flavorTexts"] = formatFlavorText(pokemonInfo["flavorTexts"]);
     // console.log(speciesInfo.evolves_from_species);
     pokemonInfo["evolChain"] = [];
     while (speciesInfo !== null) {
       pokemonInfo["evolChain"].unshift({
-        nameInfo: { id: speciesInfo.id, ...speciesInfo.name },
+        nameInfo: { id: speciesInfo.id, name: speciesInfo.name },
         image:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/" +
           speciesInfo.id +
@@ -80,9 +93,13 @@ export const Model = ({ pokemonName, onClose }) => {
     // console.log(pokemonInfo);
   };
 
+  const formatFlavorText = (text) => {
+    text = text.join(" ").replaceAll("\f", " ");
+    return text;
+  };
+
   const shortenedText = (text) => {
-    text = text.replaceAll("\f", " ");
-    return text.length > 320 ? text.slice(0, 320 - 1) + "..." : text;
+    return text.length > 420 ? text.slice(0, 420 - 1) + "... " : text;
   };
 
   const formatStatText = (str) => {
@@ -99,13 +116,12 @@ export const Model = ({ pokemonName, onClose }) => {
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
       <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
-
-        <div className="flex flex-col-reverse md:flex-row justify-center items-center">
-          <div className="flex md:w-1/3 mr-10">
-            <Card pokemonInfo={{}} image={pokemon.image}></Card>
+        <div className="flex flex-col-reverse md:flex-row justify-center pb-2">
+          <div className="flex md:w-2/5 md:mr-10 justify-center items-center">
+            <Card pokemonInfo={{ id: pokemon.id }} image={pokemon.image}></Card>
           </div>
 
-          <div className="flex flex-col w-full gap-y-10 mb-8">
+          <div className="flex flex-col w-full gap-y-10 ">
             <div className="flex justify-between h-1/3">
               <div className="font-bold font-sans text-2xl">
                 {pokemon.name && pokemon.name.toUpperCase()}
@@ -129,13 +145,40 @@ export const Model = ({ pokemonName, onClose }) => {
             </div>
 
             <div className="flex flex-wrap max-w-xl">
-              {pokemon.flavorTexts &&
-                shortenedText(pokemon.flavorTexts.join(" "))}
+              <p>
+                {pokemon.flavorTexts && shortenedText(pokemon.flavorTexts)}
+                <Link className="" href="#text-buttons" onClick={openPopover}>
+                  read more
+                </Link>
+              </p>
             </div>
           </div>
         </div>
-
-
+        <div className="">
+          <Popover
+            open={Boolean(anchor)}
+            anchorEl={anchor}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <Typography
+              sx={{ p: 2, bgcolor: "#2e3156", color: "white", fontSize: 13 }}
+            >
+              <span className="flex space-x-2">
+                <span className="flex">{pokemon.flavorTexts}</span>
+                <button className="flex" onClick={closePopover}>
+                  X
+                </button>
+              </span>
+            </Typography>
+          </Popover>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 gap-x-8 my-8">
           <div className="">
             <h3 className="font-bold">Height</h3>
@@ -149,7 +192,8 @@ export const Model = ({ pokemonName, onClose }) => {
 
           <div className="">
             <h3 className="font-bold">Egg Groups</h3>
-            {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
+            {pokemon.egg_groups &&
+              pokemon.egg_groups.map((items) => camelCase(items)).join(", ")}
           </div>
 
           <div>
@@ -160,14 +204,21 @@ export const Model = ({ pokemonName, onClose }) => {
                 .join(", ")}
           </div>
 
-          <div>
+          <div className="flex flex-col space-y-1">
             <h3 className="font-bold">Types</h3>
-            <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+            <div className="flex space-x-2">
               {pokemon.types &&
-                pokemon.types
-                  .map((type) => camelCase(type.type.name))
-                  .join(" ")}
-            </span>
+                pokemon.types.map((type) => {
+                  return (
+                    <span
+                      key={type.type.name}
+                      className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]"
+                    >
+                      {camelCase(type.type.name)}
+                    </span>
+                  );
+                })}
+            </div>
           </div>
 
           <div className="flex flex-col space-y-1">
@@ -176,7 +227,10 @@ export const Model = ({ pokemonName, onClose }) => {
               {pokemon.egg_groups &&
                 pokemon.egg_groups.map((items) => {
                   return (
-                    <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+                    <span
+                      key={items}
+                      className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]"
+                    >
                       {camelCase(items)}
                     </span>
                   );
@@ -213,7 +267,10 @@ export const Model = ({ pokemonName, onClose }) => {
             {pokemon.evolChain &&
               pokemon.evolChain.map((species, index) => {
                 return (
-                  <div key={species.nameInfo.id} className="flex flex-col md:flex-row justify-center items-center">
+                  <div
+                    key={species.nameInfo.id}
+                    className="flex flex-col md:flex-row justify-center items-center"
+                  >
                     <Card
                       pokemonInfo={species.nameInfo}
                       image={species.image}
