@@ -78,11 +78,11 @@ function App() {
   };
 
   const typeUIDropdown = () => {
-    document.getElementById("typeUIDropdown").classList.toggle("hidden")
-  }
+    document.getElementById("typeUIDropdown").classList.toggle("hidden");
+  };
   const genderUIDropdown = () => {
-    document.getElementById("genderUIDropdown").classList.toggle("hidden")
-  }
+    document.getElementById("genderUIDropdown").classList.toggle("hidden");
+  };
 
   const getPokemonDataforFilters = async (pokemonURL) => {
     let pokemonInformation = await (await fetch(pokemonURL)).json();
@@ -113,14 +113,16 @@ function App() {
     if (e.target.name === "search") {
       await setSearchInput(e.target.value);
       setFilteredResult(
-        allPokemonData.filter((item) => item.name.includes((e.target.value).toLowerCase()))
+        allPokemonData.filter((item) =>
+          item.name.includes(e.target.value.toLowerCase())
+        )
       );
     } else if (e.target.name === "type") {
       await setTypeInput(e.target.value);
       setFilteredResult([
         ...allPokemonData.filter((item) => item.types.includes(e.target.value)),
       ]);
-      if(e.target.value === "all"){
+      if (e.target.value === "all") {
         setTypeInput("");
       }
     } else if (e.target.name === "gender") {
@@ -179,19 +181,90 @@ function App() {
               <label htmlFor="type">Type</label>
 
               <div className="">
-                <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={typeUIDropdown}> 
-                  <span>All <span className="font-bold">+5 More</span></span>
+                <button
+                  className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full"
+                  onClick={typeUIDropdown}
+                >
+                  <span>
+                    All <span className="font-bold">+5 More</span>
+                  </span>
                   <IoIosArrowDown />
                 </button>
-                <div id="typeUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
+                <div
+                  id="typeUIDropdown"
+                  className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52"
+                >
                   <ul className="">
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="all"/><span> All</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="normal"/><span> Normal</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="poison"/><span> Poison</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="fire"/><span> Fire</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="water"/><span> Water</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="bug"/><span> Bug</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="flying"/><span> Flying</span></li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="all"
+                      />
+                      <span> All</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="normal"
+                      />
+                      <span> Normal</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="poison"
+                      />
+                      <span> Poison</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="fire"
+                      />
+                      <span> Fire</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="water"
+                      />
+                      <span> Water</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="bug"
+                      />
+                      <span> Bug</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="flying"
+                      />
+                      <span> Flying</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -216,14 +289,40 @@ function App() {
               <label htmlFor="type">Gender</label>
 
               <div className="">
-                <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={genderUIDropdown}> 
-                  <span>Male <span className="font-bold">+2 More</span></span>
+                <button
+                  className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full"
+                  onClick={genderUIDropdown}
+                >
+                  <span>
+                    Male <span className="font-bold">+2 More</span>
+                  </span>
                   <IoIosArrowDown />
                 </button>
-                <div id="genderUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
+                <div
+                  id="genderUIDropdown"
+                  className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52"
+                >
                   <ul className="">
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="gender" onChange={handelChange} value="male"/><span> Male</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="gender" onChange={handelChange} value="female"/><span> Female</span></li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="gender"
+                        onChange={handelChange}
+                        value="male"
+                      />
+                      <span> Male</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="gender"
+                        onChange={handelChange}
+                        value="female"
+                      />
+                      <span> Female</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -247,7 +346,10 @@ function App() {
                 }}
                 className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full text-left"
               >
-                <div>HP <span className="font-bold">+5 More</span></div> <IoIosArrowDown />{" "}
+                <div>
+                  HP <span className="font-bold">+5 More</span>
+                </div>{" "}
+                <IoIosArrowDown />{" "}
               </button>
             </div>
           </div>
@@ -370,33 +472,31 @@ function App() {
 
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-8">
           {arr &&
-          !searchInput.length &&
-          !typeInput.length &&
-          !filteredResult.length
-            && arr.map((items) => {
-                return (
-                  <Card
-                    key={items.id}
-                    pokemonInfo={{ id: items.id, ...items }}
-                    image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
-                    selectCard={toggleModel}
-                  ></Card>
-                );
-              })
-            }
+            !searchInput.length &&
+            !typeInput.length &&
+            !filteredResult.length &&
+            arr.map((items) => {
+              return (
+                <Card
+                  key={items.id}
+                  pokemonInfo={{ id: items.id, ...items }}
+                  image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
+                  selectCard={toggleModel}
+                ></Card>
+              );
+            })}
 
-            { filteredResult
-            && filteredResult.map((items, index) => {
-                return (
-                  <Card
-                    key={items.id}
-                    pokemonInfo={{ id: items.id, ...items }}
-                    image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
-                    selectCard={toggleModel}
-                  ></Card>
-                );
-              })
-              }
+          {filteredResult &&
+            filteredResult.map((items, index) => {
+              return (
+                <Card
+                  key={items.id}
+                  pokemonInfo={{ id: items.id, ...items }}
+                  image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
+                  selectCard={toggleModel}
+                ></Card>
+              );
+            })}
         </div>
       </div>
     </>

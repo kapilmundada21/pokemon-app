@@ -6,11 +6,27 @@ function Card({ pokemonInfo, image, selectCard }) {
   };
 
   const color = [
-    "#c0d2ca, #ceb8ec", "#c0d2ca, #ceb8ec", "#ceb8ec, #ceb8ec", "#edc2c4, #edc2c4", "#edc2c4, #edc2c4",
-    "#edc2c4, #b6d1e5", "#ceb8ec, #ceb8ec", "#ceb8ec, #ceb8ec", "#ceb8ec, #ceb8ec", "#c1e0c8, #c1e0c8",
-    "#c1e0c8, #c1e0c8", "#bfdecb, #b3d3e6", "#c2deca, #ceb9eb", "#c2deca, #ceb9eb", "#c2deca, #ceb9eb",
-    "#b5d1e6, #dbcbd1", "#b5d1e6, #dbcbd1", "#dbcbd1, #dbcbd1", "#c0d2ca, #ceb8ec", "#c0d2ca, #ceb8ec"
-  ]
+    "#c0d2ca, #ceb8ec",
+    "#c0d2ca, #ceb8ec",
+    "#ceb8ec, #ceb8ec",
+    "#edc2c4, #edc2c4",
+    "#edc2c4, #edc2c4",
+    "#edc2c4, #b6d1e5",
+    "#ceb8ec, #ceb8ec",
+    "#ceb8ec, #ceb8ec",
+    "#ceb8ec, #ceb8ec",
+    "#c1e0c8, #c1e0c8",
+    "#c1e0c8, #c1e0c8",
+    "#bfdecb, #b3d3e6",
+    "#c2deca, #ceb9eb",
+    "#c2deca, #ceb9eb",
+    "#c2deca, #ceb9eb",
+    "#b5d1e6, #dbcbd1",
+    "#b5d1e6, #dbcbd1",
+    "#dbcbd1, #dbcbd1",
+    "#c0d2ca, #ceb8ec",
+    "#c0d2ca, #ceb8ec",
+  ];
 
   return (
     <div
@@ -19,7 +35,7 @@ function Card({ pokemonInfo, image, selectCard }) {
       onClick={selectCard}
       className={`h-84 text-center border-2 border-dashed rounded-lg p-5 justify-items-center border-black bg-[#edc2c4]`}
       style={{
-        backgroundImage : `linear-gradient(${color[pokemonInfo.id - 1]})`
+        backgroundImage: `linear-gradient(${color[pokemonInfo.id - 1]})`,
       }}
     >
       <div className="flex justify-center">

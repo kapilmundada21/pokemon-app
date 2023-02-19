@@ -5,7 +5,7 @@ import {
   BsXCircle,
   BsArrowRightCircle,
   BsArrowRight,
-  BsArrowDown
+  BsArrowDown,
 } from "react-icons/bs";
 
 export const Model = ({ pokemonName, onClose }) => {
@@ -99,7 +99,6 @@ export const Model = ({ pokemonName, onClose }) => {
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
       <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
-
         <div className="flex flex-col-reverse md:flex-row justify-center items-center">
           <div className="flex md:w-1/3 mr-10">
             <Card pokemonInfo={{}} image={pokemon.image}></Card>
@@ -135,7 +134,6 @@ export const Model = ({ pokemonName, onClose }) => {
           </div>
         </div>
 
-
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 gap-x-8 my-8">
           <div className="">
             <h3 className="font-bold">Height</h3>
@@ -149,7 +147,8 @@ export const Model = ({ pokemonName, onClose }) => {
 
           <div className="">
             <h3 className="font-bold">Egg Groups</h3>
-            {pokemon.egg_groups && pokemon.egg_groups.join(", ")}
+            {pokemon.egg_groups &&
+              pokemon.egg_groups.map((items) => camelCase(items)).join(", ")}
           </div>
 
           <div>
@@ -160,14 +159,18 @@ export const Model = ({ pokemonName, onClose }) => {
                 .join(", ")}
           </div>
 
-          <div>
+          <div className="flex flex-col space-y-1">
             <h3 className="font-bold">Types</h3>
-            <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+            <div className="flex space-x-2">
               {pokemon.types &&
-                pokemon.types
-                  .map((type) => camelCase(type.type.name))
-                  .join(" ")}
-            </span>
+                pokemon.types.map((type) => {
+                  return (
+                    <span className="px-2 border-[1px] rounded-lg border-[#2e3156] bg-[#fcc1b0] text-[#2e3156]">
+                      {camelCase(type.type.name)}
+                    </span>
+                  );
+                })}
+            </div>
           </div>
 
           <div className="flex flex-col space-y-1">
@@ -213,7 +216,10 @@ export const Model = ({ pokemonName, onClose }) => {
             {pokemon.evolChain &&
               pokemon.evolChain.map((species, index) => {
                 return (
-                  <div key={species.nameInfo.id} className="flex flex-col md:flex-row justify-center items-center">
+                  <div
+                    key={species.nameInfo.id}
+                    className="flex flex-col md:flex-row justify-center items-center"
+                  >
                     <Card
                       pokemonInfo={species.nameInfo}
                       image={species.image}
