@@ -15,7 +15,7 @@ export const Model = ({ pokemonName, onClose }) => {
   const [pokemon, setPokemon] = useState({});
   const [anchor, setAnchor] = useState(null);
   const openPopover = (event) => {
-    setAnchor(event.currentTarget.parentNode.parentNode.parentNode);
+    setAnchor(event.target.parentNode.parentNode.parentNode.parentNode);
     console.log();
   };
 
@@ -70,9 +70,11 @@ export const Model = ({ pokemonName, onClose }) => {
     let flavorTexts = speciesInfo.flavor_text_entries.filter((textObjext) => {
       return textObjext.language.name === "en";
     });
-    pokemonInfo["flavorTexts"] = flavorTexts.map((textObjext) => {
-      return textObjext.flavor_text;
-    });
+    pokemonInfo["flavorTexts"] = removeDuplicates(
+      flavorTexts.map((textObjext) => {
+        return textObjext.flavor_text;
+      })
+    );
 
     pokemonInfo["flavorTexts"] = formatFlavorText(pokemonInfo["flavorTexts"]);
     // console.log(speciesInfo.evolves_from_species);
@@ -93,6 +95,9 @@ export const Model = ({ pokemonName, onClose }) => {
     // console.log(pokemonInfo);
   };
 
+  const removeDuplicates = (arr) => {
+    return arr.filter((item, index) => arr.indexOf(item) === index);
+  };
   const formatFlavorText = (text) => {
     text = text.join(" ").replaceAll("\f", " ");
     return text;
@@ -147,14 +152,14 @@ export const Model = ({ pokemonName, onClose }) => {
             <div className="flex flex-wrap max-w-xl">
               <p>
                 {pokemon.flavorTexts && shortenedText(pokemon.flavorTexts)}
-                <Link className="" href="#text-buttons" onClick={openPopover} style={{color:"black",fontWeight:"600"}}>
+                <Link className="" href="#text-buttons" onClick={openPopover}>
                   read more
                 </Link>
               </p>
             </div>
           </div>
         </div>
-        
+
         <div className="">
           <Popover
             open={Boolean(anchor)}
@@ -167,7 +172,9 @@ export const Model = ({ pokemonName, onClose }) => {
               vertical: "top",
               horizontal: "center",
             }}
-            style={{width : "77vw", overflowY : "scroll", marginLeft : "-40px"}}
+            PaperProps={{
+              style: { width: 690 },
+            }}
           >
             <Typography
               sx={{ p: 2, bgcolor: "#2e3156", color: "white", fontSize: 13 }}
