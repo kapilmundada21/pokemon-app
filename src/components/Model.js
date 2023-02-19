@@ -121,7 +121,7 @@ export const Model = ({ pokemonName, onClose }) => {
             <Card pokemonInfo={{ id: pokemon.id }} image={pokemon.image}></Card>
           </div>
 
-          <div className="flex flex-col w-full gap-y-10 ">
+          <div className="flex flex-col w-full mb-4 space-y-6">
             <div className="flex justify-between h-1/3">
               <div className="font-bold font-sans text-2xl">
                 {pokemon.name && pokemon.name.toUpperCase()}
@@ -147,13 +147,14 @@ export const Model = ({ pokemonName, onClose }) => {
             <div className="flex flex-wrap max-w-xl">
               <p>
                 {pokemon.flavorTexts && shortenedText(pokemon.flavorTexts)}
-                <Link className="" href="#text-buttons" onClick={openPopover}>
+                <Link className="" href="#text-buttons" onClick={openPopover} style={{color:"black",fontWeight:"600"}}>
                   read more
                 </Link>
               </p>
             </div>
           </div>
         </div>
+        
         <div className="">
           <Popover
             open={Boolean(anchor)}
@@ -166,6 +167,7 @@ export const Model = ({ pokemonName, onClose }) => {
               vertical: "top",
               horizontal: "center",
             }}
+            style={{width : "77vw", overflowY : "scroll", marginLeft : "-40px"}}
           >
             <Typography
               sx={{ p: 2, bgcolor: "#2e3156", color: "white", fontSize: 13 }}

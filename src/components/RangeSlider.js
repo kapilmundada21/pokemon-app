@@ -8,7 +8,7 @@ function valuetext(value) {
 
 function RangeSlider({ title, value, onChange, ...props }) {
   return (
-    <Grid container spacing={5} justifyContent="space-between">
+    <Grid container spacing={2} justifyContent="space-between">
       <Grid item>
         <label htmlFor="type">{title}</label>
       </Grid>
@@ -21,6 +21,7 @@ function RangeSlider({ title, value, onChange, ...props }) {
             borderRadius: 2,
             border: 2,
             px: 1,
+            marginBottom : 1
           }}
         >
           <Grid container spacing={2} alignItems="center" className="p-0">

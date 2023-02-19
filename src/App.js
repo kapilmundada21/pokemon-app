@@ -196,7 +196,7 @@ function App() {
                 </button>
                 <div
                   id="typeUIDropdown"
-                  className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52"
+                  className="hidden md:ml-2 p-2 w-40 md:w-56 bg-[#c9dde2] absolute top-52 rounded-lg"
                 >
                   <ul className="">
                     <li className="flex space-x-2 items-center">
@@ -272,22 +272,6 @@ function App() {
                   </ul>
                 </div>
               </div>
-
-              {/* <select
-                name="type"
-                id="type"
-                className="bg-[#c9dde2] p-3 rounded-lg w-full"
-                value={typeInput}
-                onChange={handelChange}
-              >
-                <option value="all">All</option>
-                <option value="normal">Normal</option>
-                <option value="poison">Poison</option>
-                <option value="fire">Fire</option>
-                <option value="water">Water</option>
-                <option value="bug">Bug</option>
-                <option value="flying">Flying</option>
-              </select> */}
             </div>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Gender</label>
@@ -304,7 +288,7 @@ function App() {
                 </button>
                 <div
                   id="genderUIDropdown"
-                  className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52"
+                  className="hidden md:ml-2 p-2 w-40 md:w-56 bg-[#c9dde2] absolute top-52 rounded-lg"
                 >
                   <ul className="">
                     <li className="flex space-x-2 items-center">
@@ -330,17 +314,6 @@ function App() {
                   </ul>
                 </div>
               </div>
-
-              {/* <select
-                name="gender"
-                id="gender"
-                className="bg-[#c9dde2] p-3 rounded-lg w-full"
-                value={genderInput}
-                onChange={handelChange}
-              >
-                <option value="male">Male +2 More</option>
-                <option value="female">Female</option>
-              </select> */}
             </div>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Stats</label>
