@@ -3,6 +3,7 @@ import { Model } from "./components/Model";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Card from "./components/Card";
+import RangeSlider from "./components/RangeSlider";
 
 function App() {
   const [openModel, setOpenModel] = useState(false);
@@ -15,22 +16,22 @@ function App() {
   const [genderInput, setGenderInput] = useState("Male");
   const [filteredResult, setFilteredResult] = useState([]);
   const [statsInput, setStatsInput] = useState({
-    hp: 0,
-    attack: 0,
-    defense: 0,
-    speed: 0,
-    "special-attack": 0,
-    "special-defense": 0,
+    hp: [70, 150],
+    attack: [70, 150],
+    defense: [70, 150],
+    speed: [70, 150],
+    "special-attack": [70, 150],
+    "special-defense": [70, 150],
   });
 
   const resetStats = () => {
     setStatsInput({
-      hp: 0,
-      attack: 0,
-      defense: 0,
-      speed: 0,
-      "special-attack": 0,
-      "special-defense": 0,
+      hp: [70, 150],
+      attack: [70, 150],
+      defense: [70, 150],
+      speed: [70, 150],
+      "special-attack": [70, 150],
+      "special-defense": [70, 150],
     });
     setFilteredResult([]);
     setTypeInput("");
@@ -78,11 +79,11 @@ function App() {
   };
 
   const typeUIDropdown = () => {
-    document.getElementById("typeUIDropdown").classList.toggle("hidden")
-  }
+    document.getElementById("typeUIDropdown").classList.toggle("hidden");
+  };
   const genderUIDropdown = () => {
-    document.getElementById("genderUIDropdown").classList.toggle("hidden")
-  }
+    document.getElementById("genderUIDropdown").classList.toggle("hidden");
+  };
 
   const getPokemonDataforFilters = async (pokemonURL) => {
     let pokemonInformation = await (await fetch(pokemonURL)).json();
@@ -113,14 +114,16 @@ function App() {
     if (e.target.name === "search") {
       await setSearchInput(e.target.value);
       setFilteredResult(
-        allPokemonData.filter((item) => item.name.includes((e.target.value).toLowerCase()))
+        allPokemonData.filter((item) =>
+          item.name.includes(e.target.value.toLowerCase())
+        )
       );
     } else if (e.target.name === "type") {
       await setTypeInput(e.target.value);
       setFilteredResult([
         ...allPokemonData.filter((item) => item.types.includes(e.target.value)),
       ]);
-      if(e.target.value === "all"){
+      if (e.target.value === "all") {
         setTypeInput("");
       }
     } else if (e.target.name === "gender") {
@@ -141,7 +144,10 @@ function App() {
 
       setFilteredResult(
         allPokemonData.filter((item) => {
-          return e.target.value >= item.stats[e.target.name];
+          return (
+            e.target.value[0] <= item.stats[e.target.name] &&
+            e.target.value[1] >= item.stats[e.target.name]
+          );
         })
       );
     }
@@ -179,19 +185,90 @@ function App() {
               <label htmlFor="type">Type</label>
 
               <div className="">
-                <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={typeUIDropdown}> 
-                  <span>All <span className="font-bold">+5 More</span></span>
+                <button
+                  className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full"
+                  onClick={typeUIDropdown}
+                >
+                  <span>
+                    All <span className="font-bold">+5 More</span>
+                  </span>
                   <IoIosArrowDown />
                 </button>
-                <div id="typeUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
+                <div
+                  id="typeUIDropdown"
+                  className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52"
+                >
                   <ul className="">
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="all"/><span> All</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="normal"/><span> Normal</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="poison"/><span> Poison</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="fire"/><span> Fire</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="water"/><span> Water</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="bug"/><span> Bug</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="type" onChange={handelChange} value="flying"/><span> Flying</span></li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="all"
+                      />
+                      <span> All</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="normal"
+                      />
+                      <span> Normal</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="poison"
+                      />
+                      <span> Poison</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="fire"
+                      />
+                      <span> Fire</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="water"
+                      />
+                      <span> Water</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="bug"
+                      />
+                      <span> Bug</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="type"
+                        onChange={handelChange}
+                        value="flying"
+                      />
+                      <span> Flying</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -216,14 +293,40 @@ function App() {
               <label htmlFor="type">Gender</label>
 
               <div className="">
-                <button className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full" onClick={genderUIDropdown}> 
-                  <span>Male <span className="font-bold">+2 More</span></span>
+                <button
+                  className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full"
+                  onClick={genderUIDropdown}
+                >
+                  <span>
+                    Male <span className="font-bold">+2 More</span>
+                  </span>
                   <IoIosArrowDown />
                 </button>
-                <div id="genderUIDropdown" className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52">
+                <div
+                  id="genderUIDropdown"
+                  className="hidden ml-2 p-2 w-56 bg-[#c9dde2] absolute top-52"
+                >
                   <ul className="">
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="gender" onChange={handelChange} value="male"/><span> Male</span></li>
-                    <li className="flex space-x-2 items-center"><input type="checkbox" id="" name="gender" onChange={handelChange} value="female"/><span> Female</span></li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="gender"
+                        onChange={handelChange}
+                        value="male"
+                      />
+                      <span> Male</span>
+                    </li>
+                    <li className="flex space-x-2 items-center">
+                      <input
+                        type="checkbox"
+                        id=""
+                        name="gender"
+                        onChange={handelChange}
+                        value="female"
+                      />
+                      <span> Female</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -247,14 +350,17 @@ function App() {
                 }}
                 className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full text-left"
               >
-                <div>HP <span className="font-bold">+5 More</span></div> <IoIosArrowDown />{" "}
+                <div>
+                  HP <span className="font-bold">+5 More</span>
+                </div>{" "}
+                <IoIosArrowDown />{" "}
               </button>
             </div>
           </div>
           {statsDropdown && (
             <div className="absolute top-30 md:top-[28%] right-3 md:right-10 z-10 border-2 border-black bg-white">
               <div className="p-6">
-                <div className="flex justify-between pb-6">
+                <div className="flex justify-between pb-10">
                   <span className="font-bold text-xl">Select Stats</span>
                   <button
                     onClick={() => {
@@ -264,89 +370,55 @@ function App() {
                     <AiOutlineCloseCircle className="text-xl" />
                   </button>
                 </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">HP</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="hp"
-                      id="hp"
-                      className="md:w-72"
-                      value={statsInput.hp}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.hp}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Attack</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="attack"
-                      id="attack"
-                      className="md:w-72"
-                      value={statsInput.attack}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.attack}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Defense</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="defense"
-                      id="defense"
-                      className="md:w-72"
-                      value={statsInput.defense}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.defense}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Speed</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="speed"
-                      id="speed"
-                      className="md:w-72"
-                      value={statsInput.speed}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.speed}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Sp. Attack</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="special-attack"
-                      id="special-attack"
-                      className="ml-6 md:w-72"
-                      value={statsInput["special-attack"]}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput["special-attack"]}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Sp. Def</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="special-defense"
-                      id="special-defense"
-                      className="md:w-72"
-                      value={statsInput["special-defense"]}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput["special-defense"]}</span>
-                  </div>
+                <div className="">
+                  <RangeSlider
+                    title="HP"
+                    type="range"
+                    name="hp"
+                    id="hp"
+                    value={statsInput.hp}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Attack"
+                    type="range"
+                    name="attack"
+                    id="attack"
+                    value={statsInput.attack}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Defense"
+                    type="range"
+                    name="defense"
+                    id="defense"
+                    value={statsInput.defense}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Speed"
+                    type="range"
+                    name="speed"
+                    id="speed"
+                    value={statsInput.speed}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Sp. Attack"
+                    type="range"
+                    name="special-attack"
+                    id="special-attack"
+                    value={statsInput["special-attack"]}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Sp. Def"
+                    type="range"
+                    name="special-defense"
+                    id="special-defense"
+                    value={statsInput["special-defense"]}
+                    onChange={handelChange}
+                  ></RangeSlider>
                 </div>
                 <div className="pt-3 space-x-4 flex justify-end">
                   <button
@@ -370,33 +442,31 @@ function App() {
 
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-8">
           {arr &&
-          !searchInput.length &&
-          !typeInput.length &&
-          !filteredResult.length
-            && arr.map((items) => {
-                return (
-                  <Card
-                    key={items.id}
-                    pokemonInfo={{ id: items.id, ...items }}
-                    image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
-                    selectCard={toggleModel}
-                  ></Card>
-                );
-              })
-            }
+            !searchInput.length &&
+            !typeInput.length &&
+            !filteredResult.length &&
+            arr.map((items) => {
+              return (
+                <Card
+                  key={items.id}
+                  pokemonInfo={{ id: items.id, ...items }}
+                  image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
+                  selectCard={toggleModel}
+                ></Card>
+              );
+            })}
 
-            { filteredResult
-            && filteredResult.map((items, index) => {
-                return (
-                  <Card
-                    key={items.id}
-                    pokemonInfo={{ id: items.id, ...items }}
-                    image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
-                    selectCard={toggleModel}
-                  ></Card>
-                );
-              })
-              }
+          {filteredResult &&
+            filteredResult.map((items, index) => {
+              return (
+                <Card
+                  key={items.id}
+                  pokemonInfo={{ id: items.id, ...items }}
+                  image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
+                  selectCard={toggleModel}
+                ></Card>
+              );
+            })}
         </div>
       </div>
     </>
