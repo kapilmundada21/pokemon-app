@@ -3,6 +3,7 @@ import { Model } from "./components/Model";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Card from "./components/Card";
+import RangeSlider from "./components/RangeSlider";
 
 function App() {
   const [openModel, setOpenModel] = useState(false);
@@ -15,22 +16,22 @@ function App() {
   const [genderInput, setGenderInput] = useState("Male");
   const [filteredResult, setFilteredResult] = useState([]);
   const [statsInput, setStatsInput] = useState({
-    hp: 0,
-    attack: 0,
-    defense: 0,
-    speed: 0,
-    "special-attack": 0,
-    "special-defense": 0,
+    hp: [70, 150],
+    attack: [70, 150],
+    defense: [70, 150],
+    speed: [70, 150],
+    "special-attack": [70, 150],
+    "special-defense": [70, 150],
   });
 
   const resetStats = () => {
     setStatsInput({
-      hp: 0,
-      attack: 0,
-      defense: 0,
-      speed: 0,
-      "special-attack": 0,
-      "special-defense": 0,
+      hp: [70, 150],
+      attack: [70, 150],
+      defense: [70, 150],
+      speed: [70, 150],
+      "special-attack": [70, 150],
+      "special-defense": [70, 150],
     });
     setFilteredResult([]);
     setTypeInput("");
@@ -143,7 +144,10 @@ function App() {
 
       setFilteredResult(
         allPokemonData.filter((item) => {
-          return e.target.value >= item.stats[e.target.name];
+          return (
+            e.target.value[0] <= item.stats[e.target.name] &&
+            e.target.value[1] >= item.stats[e.target.name]
+          );
         })
       );
     }
@@ -366,89 +370,55 @@ function App() {
                     <AiOutlineCloseCircle className="text-xl" />
                   </button>
                 </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">HP</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="hp"
-                      id="hp"
-                      className="md:w-72"
-                      value={statsInput.hp}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.hp}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Attack</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="attack"
-                      id="attack"
-                      className="md:w-72"
-                      value={statsInput.attack}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.attack}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Defense</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="defense"
-                      id="defense"
-                      className="md:w-72"
-                      value={statsInput.defense}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.defense}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Speed</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="speed"
-                      id="speed"
-                      className="md:w-72"
-                      value={statsInput.speed}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput.speed}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Sp. Attack</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="special-attack"
-                      id="special-attack"
-                      className="ml-6 md:w-72"
-                      value={statsInput["special-attack"]}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput["special-attack"]}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2">
-                  <label htmlFor="type">Sp. Def</label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="range"
-                      name="special-defense"
-                      id="special-defense"
-                      className="md:w-72"
-                      value={statsInput["special-defense"]}
-                      onChange={handelChange}
-                    />
-                    <span>{statsInput["special-defense"]}</span>
-                  </div>
+                <div className="">
+                  <RangeSlider
+                    title="HP"
+                    type="range"
+                    name="hp"
+                    id="hp"
+                    value={statsInput.hp}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Attack"
+                    type="range"
+                    name="attack"
+                    id="attack"
+                    value={statsInput.attack}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Defense"
+                    type="range"
+                    name="defense"
+                    id="defense"
+                    value={statsInput.defense}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Speed"
+                    type="range"
+                    name="speed"
+                    id="speed"
+                    value={statsInput.speed}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Sp. Attack"
+                    type="range"
+                    name="special-attack"
+                    id="special-attack"
+                    value={statsInput["special-attack"]}
+                    onChange={handelChange}
+                  ></RangeSlider>
+                  <RangeSlider
+                    title="Sp. Def"
+                    type="range"
+                    name="special-defense"
+                    id="special-defense"
+                    value={statsInput["special-defense"]}
+                    onChange={handelChange}
+                  ></RangeSlider>
                 </div>
                 <div className="pt-3 space-x-4 flex justify-end">
                   <button

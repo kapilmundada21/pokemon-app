@@ -45,7 +45,9 @@ function Card({ pokemonInfo, image, selectCard }) {
         <h2 className="font-bold">
           {pokemonInfo.name && camelCase(pokemonInfo.name)}
         </h2>
-        {pokemonInfo.id && ("000" + pokemonInfo.id).slice(-3)}
+        {pokemonInfo.name &&
+          pokemonInfo.id &&
+          ("000" + pokemonInfo.id).slice(-3)}
       </div>
     </div>
   );
