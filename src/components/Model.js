@@ -120,7 +120,7 @@ export const Model = ({ pokemonName, onClose }) => {
 
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
-      <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative  text-indigo-900">
+      <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative text-[#2e3159]">
         <div className="flex flex-col-reverse md:flex-row justify-center pb-2">
           <div className="flex md:w-2/5 md:mr-10 justify-center items-center">
             <Card pokemonInfo={{ id: pokemon.id }} image={pokemon.image}></Card>
@@ -132,7 +132,7 @@ export const Model = ({ pokemonName, onClose }) => {
                 {pokemon.name && pokemon.name.toUpperCase()}
               </div>
 
-              <div className="font-sans border-x-2 px-2 md:px-10 border-indigo-900 text-2xl ">
+              <div className="font-sans border-x-2 px-2 md:px-10 border-[#2e3159] text-2xl ">
                 {("000" + pokemon.id).slice(-3)}
               </div>
 
@@ -249,16 +249,17 @@ export const Model = ({ pokemonName, onClose }) => {
         </div>
 
         <div className="p-2 md:p-5 bg-[#b0d2d2] rounded-lg mb-8">
-          <h2 className="font-bold text-1xl my-4">Stats</h2>
+          <h2 className="font-bold text-xl my-4">Stats</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-2">
             {pokemon.stats &&
               pokemon.stats.map((stat) => {
                 return (
                   <div className="grid grid-cols-4" key={stat.stat.name}>
                     <span className="">{formatStatText(stat.stat.name)}</span>
-                    <div className="col-span-3 h-fill bg-gray-200 m-1 align-baseline">
+                    <div className="col-span-3 h-fill bg-[#93b2b2] m-1 align-baseline">
                       <div
-                        className={`object-cover px-2 text-xs text-white bg-indigo-900 `}
+                        className={`object-cover px-2 text-xs text-white bg-[#2e3156]
+ `}
                         style={{ width: stat.base_stat + "%" }}
                       >
                         {stat.base_stat}
