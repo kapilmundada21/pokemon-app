@@ -8,11 +8,19 @@ import RangeSlider from "./components/RangeSlider";
 function App() {
   const [openModel, setOpenModel] = useState(false);
   const [allPokemonData, setAllPokemonData] = useState([]);
+  const [pokemonsData, setPokemonsData] = useState([]);
   const [selectedPokemonName, setSelectedPokemonName] = useState("");
   const [statsDropdown, setStatsDropdown] = useState(false);
   const [typeDropDown, setTypeDropDown] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [typeInput, setTypeInput] = useState("");
+  const [typeInput, setTypeInput] = useState([
+    "normal",
+    "poison",
+    "fire",
+    "water",
+    "bug",
+    "flying",
+  ]);
   const [genderInput, setGenderInput] = useState("Male");
   const [filteredResult, setFilteredResult] = useState([]);
   const [statsInput, setStatsInput] = useState({
@@ -33,8 +41,7 @@ function App() {
       "special-attack": [70, 150],
       "special-defense": [70, 150],
     });
-    setFilteredResult([]);
-    setTypeInput("");
+    setFilteredResult(pokemonsData);
     setSearchInput("");
   };
 
@@ -50,7 +57,8 @@ function App() {
           })
       )
     );
-    await setFilteredResult(allPokemonData);
+    await setPokemonsData(allPokemonData);
+    await setFilteredResult(pokemonsData);
   };
 
   const toggleModel = (event) => {
@@ -64,7 +72,6 @@ function App() {
     setStatsDropdown(!statsDropdown);
     if (statsDropdown === true) {
       setTypeDropDown(false);
-      setTypeInput([]);
       var get = document.getElementsByName("type");
       for (var i = 0; i < get.length; i++) {
         get[i].checked = false;
@@ -103,6 +110,9 @@ function App() {
     });
     return pokemonInfo;
   };
+  const removeDuplicates = (arr) => {
+    return arr.filter((item, index) => arr.indexOf(item) === index);
+  };
 
   useEffect(() => {
     fetchData();
@@ -110,25 +120,60 @@ function App() {
   }, []);
   const arr = allPokemonData;
 
+  useEffect(() => {
+    if (typeInput.length == 0)
+      setTypeInput(["normal", "poison", "fire", "water", "bug", "flying"]);
+    let newPokemonsData = [];
+    typeInput.forEach((element) => {
+      newPokemonsData = [
+        ...newPokemonsData,
+        ...allPokemonData.filter((item) => item.types.includes(element)),
+      ];
+    });
+    setPokemonsData(removeDuplicates(newPokemonsData));
+    console.log(pokemonsData);
+    resetStats();
+  }, [typeInput, allPokemonData]);
+
+  useEffect(() => {
+    setFilteredResult(pokemonsData);
+    console.log(filteredResult);
+  }, [pokemonsData]);
+
+  const applyFilters = () => {
+    setFilteredResult(
+      pokemonsData.filter((item) => {
+        let satifies = true;
+        Object.entries(statsInput).forEach(([statName, statValues]) => {
+          if (
+            !(
+              statValues[0] <= item.stats[statName] &&
+              statValues[1] >= item.stats[statName]
+            )
+          )
+            satifies = false;
+        });
+        return satifies === true;
+      })
+    );
+  };
   const handelChange = async (e) => {
     if (e.target.name === "search") {
       await setSearchInput(e.target.value);
       setFilteredResult(
-        allPokemonData.filter((item) =>
+        pokemonsData.filter((item) =>
           item.name.includes(e.target.value.toLowerCase())
         )
       );
     } else if (e.target.name === "type") {
-      await setTypeInput(e.target.value);
-      setFilteredResult([
-        ...allPokemonData.filter((item) => item.types.includes(e.target.value)),
-      ]);
-      if (e.target.value === "all") {
-        setTypeInput("");
+      if (typeInput.includes(e.target.value)) {
+        setTypeInput(typeInput.filter((type) => type !== e.target.value));
+      } else if (!typeInput.includes(e.target.value)) {
+        setTypeInput([...typeInput, e.target.value]);
       }
     } else if (e.target.name === "gender") {
       setGenderInput(e.target.value);
-      setFilteredResult(allPokemonData);
+      setFilteredResult(pokemonsData);
     } else if (
       e.target.name === "hp" ||
       e.target.name === "attack" ||
@@ -141,15 +186,6 @@ function App() {
         ...statsInput,
         [e.target.name]: e.target.value,
       });
-
-      setFilteredResult(
-        allPokemonData.filter((item) => {
-          return (
-            e.target.value[0] <= item.stats[e.target.name] &&
-            e.target.value[1] >= item.stats[e.target.name]
-          );
-        })
-      );
     }
   };
 
@@ -205,17 +241,8 @@ function App() {
                         id=""
                         name="type"
                         onChange={handelChange}
-                        value="all"
-                      />
-                      <span> All</span>
-                    </li>
-                    <li className="flex space-x-2 items-center">
-                      <input
-                        type="checkbox"
-                        id=""
-                        name="type"
-                        onChange={handelChange}
                         value="normal"
+                        checked={typeInput.includes("normal")}
                       />
                       <span> Normal</span>
                     </li>
@@ -226,6 +253,7 @@ function App() {
                         name="type"
                         onChange={handelChange}
                         value="poison"
+                        checked={typeInput.includes("poison")}
                       />
                       <span> Poison</span>
                     </li>
@@ -236,6 +264,7 @@ function App() {
                         name="type"
                         onChange={handelChange}
                         value="fire"
+                        checked={typeInput.includes("fire")}
                       />
                       <span> Fire</span>
                     </li>
@@ -246,6 +275,7 @@ function App() {
                         name="type"
                         onChange={handelChange}
                         value="water"
+                        checked={typeInput.includes("water")}
                       />
                       <span> Water</span>
                     </li>
@@ -256,6 +286,7 @@ function App() {
                         name="type"
                         onChange={handelChange}
                         value="bug"
+                        checked={typeInput.includes("bug")}
                       />
                       <span> Bug</span>
                     </li>
@@ -266,6 +297,7 @@ function App() {
                         name="type"
                         onChange={handelChange}
                         value="flying"
+                        checked={typeInput.includes("flying")}
                       />
                       <span> Flying</span>
                     </li>
@@ -403,6 +435,7 @@ function App() {
                   </button>
                   <button
                     type="button"
+                    onClick={applyFilters}
                     className="py-1 px-3 border-2 border-blue-700 rounded-lg bg-blue-700 text-white items-center"
                   >
                     Apply
