@@ -49,7 +49,7 @@ function App() {
     let mainURL = `https://pokeapi.co/api/v2/pokemon/`;
     let mainData = await fetch(mainURL);
     let mainParsedData = await mainData.json();
-    await setAllPokemonData(
+    setAllPokemonData(
       await Promise.all(
         mainParsedData["results"] &&
           mainParsedData["results"].map(async (pokemon) => {
@@ -57,8 +57,6 @@ function App() {
           })
       )
     );
-    await setPokemonsData(allPokemonData);
-    await setFilteredResult(pokemonsData);
   };
 
   const toggleModel = (event) => {
@@ -133,11 +131,14 @@ function App() {
     setPokemonsData(removeDuplicates(newPokemonsData));
     console.log(pokemonsData);
     resetStats();
-  }, [typeInput, allPokemonData]);
+  }, [typeInput]);
+
+  useEffect(() => {
+    setPokemonsData(allPokemonData);
+  }, [allPokemonData]);
 
   useEffect(() => {
     setFilteredResult(pokemonsData);
-    console.log(filteredResult);
   }, [pokemonsData]);
 
   const applyFilters = () => {
@@ -447,21 +448,6 @@ function App() {
         </nav>
 
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-8">
-          {arr &&
-            !searchInput.length &&
-            !typeInput.length &&
-            !filteredResult.length &&
-            arr.map((items) => {
-              return (
-                <Card
-                  key={items.id}
-                  pokemonInfo={{ id: items.id, ...items }}
-                  image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${items.id}.svg`}
-                  selectCard={toggleModel}
-                ></Card>
-              );
-            })}
-
           {filteredResult &&
             filteredResult.map((items, index) => {
               return (

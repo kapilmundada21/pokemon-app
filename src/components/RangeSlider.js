@@ -15,13 +15,13 @@ function RangeSlider({ title, value, onChange, ...props }) {
       <Grid item>
         <Box
           sx={{
-            width: 400,
+            minWidth: 260,
             bgcolor: "#f1f3f3",
             borderColor: "blue",
             borderRadius: 2,
             border: 2,
             px: 1,
-            marginBottom : 1
+            marginBottom: 1,
           }}
         >
           <Grid container spacing={2} alignItems="center" className="p-0">
