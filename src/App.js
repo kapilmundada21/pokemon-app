@@ -10,7 +10,7 @@ function App() {
   const [openModel, setOpenModel] = useState(false);
   const [allPokemonData, setAllPokemonData] = useState([]);
   const [pokemonsData, setPokemonsData] = useState([]);
-  const [selectedPokemonName, setSelectedPokemonName] = useState("");
+  const [selectedPokemon, setSelectedPokemon] = useState({});
   const [statsDropdown, setStatsDropdown] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [typeInput, setTypeInput] = useState([
@@ -65,9 +65,11 @@ function App() {
   };
 
   const toggleModel = (event) => {
-    if (selectedPokemonName === "")
-      setSelectedPokemonName(event.currentTarget.getAttribute("name"));
-    else setSelectedPokemonName("");
+    if (Object.keys(selectedPokemon).length === 0)
+    {
+      setSelectedPokemon(event.currentTarget);
+    } 
+    else setSelectedPokemon({});
     setOpenModel(!openModel);
   };
 
@@ -82,6 +84,17 @@ function App() {
       }
     }
   };
+
+  const previousModal=()=>{ 
+    if(selectedPokemon.previousElementSibling)
+    setSelectedPokemon(selectedPokemon.previousElementSibling);
+  }
+
+  const nextModal=()=>{
+    if(selectedPokemon.nextElementSibling)
+    setSelectedPokemon(selectedPokemon.nextElementSibling);
+  }
+
   const typeUIDropdown = () => {
     document.getElementById("typeUIDropdown").classList.toggle("hidden");
     document.getElementById("typeUIDropdownButton").classList.toggle("bg-white");
@@ -196,7 +209,8 @@ function App() {
   return (
     <>
       {openModel && (
-        <Model pokemonName={selectedPokemonName} onClose={toggleModel} />
+        <Model pokemonName={selectedPokemon.getAttribute("name")} onClose={toggleModel} onPreviousCard={previousModal}
+        onNextCard={nextModal} />
       )}
       <div className="p-4 md:p-10 bg-[#deeded]">
         <nav className="mb-16 space-y-4">
