@@ -10,7 +10,7 @@ function RangeSlider({ title, value, onChange, ...props }) {
   return (
     <Grid container spacing={2} justifyContent="space-between">
       <Grid item>
-        <label htmlFor="type">{title}</label>
+        <label htmlFor="type">{title} &nbsp;</label>
       </Grid>
       <Grid item>
         <Box

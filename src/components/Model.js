@@ -119,7 +119,7 @@ export const Model = ({ pokemonName, onClose }) => {
   };
 
   return (
-    <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center ">
+    <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center z-50">
       <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative text-[#2e3159]">
         <div className="flex flex-col-reverse md:flex-row justify-center pb-2">
           <div className="flex md:w-2/5 md:mr-10 justify-center items-center">

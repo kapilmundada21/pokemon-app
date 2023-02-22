@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Model } from "./components/Model";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
 import Card from "./components/Card";
 import RangeSlider from "./components/RangeSlider";
 
@@ -11,7 +12,6 @@ function App() {
   const [pokemonsData, setPokemonsData] = useState([]);
   const [selectedPokemonName, setSelectedPokemonName] = useState("");
   const [statsDropdown, setStatsDropdown] = useState(false);
-  const [typeDropDown, setTypeDropDown] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [typeInput, setTypeInput] = useState([
     "normal",
@@ -21,6 +21,7 @@ function App() {
     "bug",
     "flying",
   ]);
+  //eslint-disable-next-line
   const [genderInput, setGenderInput] = useState("Male");
   const [filteredResult, setFilteredResult] = useState([]);
   const [statsInput, setStatsInput] = useState({
@@ -31,6 +32,10 @@ function App() {
     "special-attack": [70, 150],
     "special-defense": [70, 150],
   });
+
+  const searchButton = () => {
+    document.getElementById("search").focus()
+  }
 
   const resetStats = () => {
     setStatsInput({
@@ -67,6 +72,8 @@ function App() {
   };
 
   const toggleStatsDropdown = () => {
+    document.getElementById("statsDropdownButton").classList.toggle("bg-white")
+    document.getElementById("statsDropdownButton").classList.toggle("bg-[#c9dde2]")
     setStatsDropdown(!statsDropdown);
     if (statsDropdown === true) {
       setTypeDropDown(false);
@@ -76,18 +83,15 @@ function App() {
       }
     }
   };
-
-  const toggleTypeDropDown = () => {
-    setTypeDropDown(!typeDropDown);
-    if (typeDropDown === true) setStatsDropdown(false);
-    resetStats();
-  };
-
   const typeUIDropdown = () => {
     document.getElementById("typeUIDropdown").classList.toggle("hidden");
+    document.getElementById("typeUIDropdownButton").classList.toggle("bg-white");
+    document.getElementById("typeUIDropdownButton").classList.toggle("bg-[#c9dde2]");
   };
   const genderUIDropdown = () => {
     document.getElementById("genderUIDropdown").classList.toggle("hidden");
+    document.getElementById("genderUIDropdownButton").classList.add("bg-white");
+    document.getElementById("genderUIDropdownButton").classList.remove("bg-[#c9dde2]");
   };
 
   const getPokemonDataforFilters = async (pokemonURL) => {
@@ -116,10 +120,9 @@ function App() {
     fetchData();
     //eslint-disable-next-line
   }, []);
-  const arr = allPokemonData;
 
   useEffect(() => {
-    if (typeInput.length == 0)
+    if (typeInput.length === 0)
       setTypeInput(["normal", "poison", "fire", "water", "bug", "flying"]);
     let newPokemonsData = [];
     typeInput.forEach((element) => {
@@ -131,6 +134,7 @@ function App() {
     setPokemonsData(removeDuplicates(newPokemonsData));
     console.log(pokemonsData);
     resetStats();
+    //eslint-disable-next-line
   }, [typeInput]);
 
   useEffect(() => {
@@ -208,32 +212,36 @@ function App() {
           <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
             <div className="md:col-span-3 flex flex-col w-full space-y-2">
               <label htmlFor="search">Search by</label>
-              <input
-                type="search"
-                name="search"
-                id="search"
-                placeholder="Name"
-                value={searchInput}
-                onChange={handelChange}
-                className="bg-[#c9dde2] p-3 rounded-lg w-full"
-              />
+              <div className="bg-[#c9dde2] rounded-lg flex items-center w-full space-x-2 pr-3">
+                <input
+                  type="search"
+                  name="search"
+                  id="search"
+                  placeholder="Name"
+                  value={searchInput}
+                  onChange={handelChange}
+                  className="bg-[#c9dde2] p-3 rounded-lg w-full"
+                />
+                <BsSearch className="bg-transparent text-black" onClick={searchButton} />
+              </div>
             </div>
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="type">Type</label>
 
               <div className="">
                 <button
-                  className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full"
+                  className="flex justify-between items-center bg-[#c9dde2] py-3 px-1 md:p-3 rounded-lg w-full"
                   onClick={typeUIDropdown}
+                  id="typeUIDropdownButton"
                 >
                   <span>
-                    All <span className="font-bold">+5 More</span>
+                    Normal <span className="font-bold">+5 More</span>
                   </span>
                   <IoIosArrowDown />
                 </button>
                 <div
                   id="typeUIDropdown"
-                  className="hidden md:ml-2 p-2 w-40 md:w-56 bg-[#c9dde2] absolute top-52 rounded-lg"
+                  className="hidden p-2 w-40 md:w-56 bg-white absolute top-52 rounded-lg"
                 >
                   <ul className="">
                     <li className="flex space-x-2 items-center">
@@ -313,6 +321,7 @@ function App() {
                 <button
                   className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full"
                   onClick={genderUIDropdown}
+                  id="genderUIDropdownButton"
                 >
                   <span>
                     Male <span className="font-bold">+2 More</span>
@@ -321,7 +330,7 @@ function App() {
                 </button>
                 <div
                   id="genderUIDropdown"
-                  className="hidden md:ml-2 p-2 w-40 md:w-56 bg-[#c9dde2] absolute top-52 rounded-lg"
+                  className="hidden p-2 w-40 md:w-56 bg-white absolute top-52 rounded-lg"
                 >
                   <ul className="">
                     <li className="flex space-x-2 items-center">
@@ -352,9 +361,10 @@ function App() {
               <label htmlFor="type">Stats</label>
               <button
                 onClick={() => {
-                  toggleStatsDropdown() && toggleTypeDropDown();
+                  toggleStatsDropdown();
                 }}
                 className="flex justify-between items-center bg-[#c9dde2] p-3 rounded-lg w-full text-left"
+                id="statsDropdownButton"
               >
                 <div>
                   HP <span className="font-bold">+5 More</span>
