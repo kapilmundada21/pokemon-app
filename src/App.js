@@ -89,8 +89,8 @@ function App() {
   };
   const genderUIDropdown = () => {
     document.getElementById("genderUIDropdown").classList.toggle("hidden");
-    document.getElementById("genderUIDropdownButton").classList.add("bg-white");
-    document.getElementById("genderUIDropdownButton").classList.remove("bg-[#c9dde2]");
+    document.getElementById("genderUIDropdownButton").classList.toggle("bg-white");
+    document.getElementById("genderUIDropdownButton").classList.toggle("bg-[#c9dde2]");
   };
 
   const getPokemonDataforFilters = async (pokemonURL) => {
