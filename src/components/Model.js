@@ -11,12 +11,11 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
-export const Model = ({ pokemonName, onClose }) => {
+export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
   const [pokemon, setPokemon] = useState({});
   const [anchor, setAnchor] = useState(null);
   const openPopover = (event) => {
     setAnchor(event.target.parentNode.parentNode.parentNode.parentNode);
-    console.log();
   };
 
   const closePopover = (event) => {
@@ -27,13 +26,20 @@ export const Model = ({ pokemonName, onClose }) => {
     onClose();
   };
 
+  const changeToPreviousCard=async()=>{onPreviousCard();}
+  const changeToNextCard=()=>{onNextCard();}
+
   useEffect(() => {
     fetchPokemonData(pokemonName);
     // eslint-disable-next-line
   }, []);
 
-  const fetchPokemonData = async () => {
-    let pokemonURL = `https://pokeapi.co/api/v2/pokemon/` + pokemonName + `/`;
+  useEffect(()=>{
+    fetchPokemonData(pokemonName);
+  },[pokemonName])
+
+  const fetchPokemonData = async (pokeName) => {
+    let pokemonURL = `https://pokeapi.co/api/v2/pokemon/` + pokeName + `/`;
     let pokemonInformation = await (await fetch(pokemonURL)).json();
     const pokemonInfo = (({
       sprites: {
@@ -96,6 +102,8 @@ export const Model = ({ pokemonName, onClose }) => {
   };
 
   const removeDuplicates = (arr) => {
+    console.log(arr);
+    console.log(arr.filter((item, index) => arr.indexOf(item) === index));
     return arr.filter((item, index) => arr.indexOf(item) === index);
   };
   const formatFlavorText = (text) => {
@@ -138,13 +146,13 @@ export const Model = ({ pokemonName, onClose }) => {
 
               <div className="grid grid-cols-3 gap-x-2 text-2xl">
                 <button>
-                  <BsArrowLeftCircle />
+                  <BsArrowLeftCircle onClick={changeToPreviousCard}/>
                 </button>
                 <button>
                   <BsXCircle onClick={handleOnClose} />
                 </button>
                 <button>
-                  <BsArrowRightCircle />
+                  <BsArrowRightCircle onClick={changeToNextCard}/>
                 </button>
               </div>
             </div>
