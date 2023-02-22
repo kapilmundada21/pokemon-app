@@ -76,7 +76,6 @@ function App() {
     document.getElementById("statsDropdownButton").classList.toggle("bg-[#c9dde2]")
     setStatsDropdown(!statsDropdown);
     if (statsDropdown === true) {
-      setTypeDropDown(false);
       var get = document.getElementsByName("type");
       for (var i = 0; i < get.length; i++) {
         get[i].checked = false;
