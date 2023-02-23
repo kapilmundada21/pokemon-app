@@ -102,9 +102,14 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
   };
 
   const removeDuplicates = (arr) => {
-    console.log(arr);
-    console.log(arr.filter((item, index) => arr.indexOf(item) === index));
-    return arr.filter((item, index) => arr.indexOf(item) === index);
+    let regExFlavorTexts=arr.map((text)=>text.toLowerCase().toLowerCase().replace(/[^\x00-\x7F]/g, "").replace(/[\n|\f|\s]/g,""));
+    let unique = [];
+    let newarr=regExFlavorTexts.filter((item, index) => {
+      if (regExFlavorTexts.indexOf(item) === index )
+      unique.push(arr[index])
+      return regExFlavorTexts.indexOf(item) === index  
+    })
+    return unique
   };
   const formatFlavorText = (text) => {
     text = text.join(" ").replaceAll("\f", " ");
