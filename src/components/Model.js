@@ -32,11 +32,8 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
   useEffect(() => {
     fetchPokemonData(pokemonName);
     // eslint-disable-next-line
-  }, []);
+  }, [pokemonName]);
 
-  useEffect(()=>{
-    fetchPokemonData(pokemonName);
-  },[pokemonName])
 
   const fetchPokemonData = async (pokeName) => {
     let pokemonURL = `https://pokeapi.co/api/v2/pokemon/` + pokeName + `/`;
