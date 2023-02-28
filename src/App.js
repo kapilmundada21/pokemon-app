@@ -5,9 +5,11 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import Card from "./components/Card";
 import RangeSlider from "./components/RangeSlider";
+import Pagination from '@mui/material/Pagination';
 
 function App() {
   const [openModel, setOpenModel] = useState(false);
+  const [totalCount,setTotalCount]=useState(0)
   const [allPokemonData, setAllPokemonData] = useState([]);
   const [pageOffset, setPageOffset] = useState(0);
   const [pokemonsData, setPokemonsData] = useState([]);
@@ -55,6 +57,7 @@ function App() {
     let mainURL = `https://pokeapi.co/api/v2/pokemon/?offset=${pageOffset}&limit=18`;
     let mainData = await fetch(mainURL);
     let mainParsedData = await mainData.json();
+    setTotalCount(mainParsedData["count"]);
     setAllPokemonData(
       await Promise.all(
         mainParsedData["results"] &&
@@ -207,6 +210,9 @@ function App() {
     }
   };
 
+  const handlePageChange=(e,page)=>{
+    setPageOffset((page-1)*18);
+  }
   return (
     <>
       {openModel && (
@@ -485,8 +491,10 @@ function App() {
             })}
         </div>
 
-        <div className="flex justify-between my-8">
+        <div className="flex justify-between my-8 items-center">
           <button type="button" className="p-2 bg-blue-500 text-white rounded-md disabled:bg-blue-300" onClick={()=>{setPageOffset(pageOffset - 18)}} disabled={ (pageOffset > 0)?false:true }>Previous</button>
+          <Pagination count={Math.ceil(totalCount/18)} color="primary" onChange={handlePageChange}/>
+          
           <button type="button" className="p-2 bg-blue-500 text-white rounded-md disabled:bg-blue-300" onClick={()=>{setPageOffset(pageOffset + 18)}} disabled={ (pageOffset >= (1261))?true:false }>Next</button>
         </div>
       </div>
