@@ -9,6 +9,7 @@ import RangeSlider from "./components/RangeSlider";
 function App() {
   const [openModel, setOpenModel] = useState(false);
   const [allPokemonData, setAllPokemonData] = useState([]);
+  const [pageOffset, setPageOffset] = useState(0);
   const [pokemonsData, setPokemonsData] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState({});
   const [statsDropdown, setStatsDropdown] = useState(false);
@@ -51,7 +52,7 @@ function App() {
   };
 
   const fetchData = async () => {
-    let mainURL = `https://pokeapi.co/api/v2/pokemon/`;
+    let mainURL = `https://pokeapi.co/api/v2/pokemon/?offset=${pageOffset}&limit=18`;
     let mainData = await fetch(mainURL);
     let mainParsedData = await mainData.json();
     setAllPokemonData(
@@ -131,7 +132,7 @@ function App() {
   useEffect(() => {
     fetchData();
     //eslint-disable-next-line
-  }, []);
+  }, [pageOffset]);
 
   useEffect(() => {
     if (typeInput.length === 0)
@@ -254,7 +255,7 @@ function App() {
                 </button>
                 <div
                   id="typeUIDropdown"
-                  className="hidden p-2 w-40 md:w-56 bg-white absolute top-52 rounded-lg"
+                  className="hidden p-2 w-[44vw] md:w-56 bg-white absolute rounded-lg"
                 >
                   <ul className="">
                     <li className="flex space-x-2 items-center">
@@ -343,7 +344,7 @@ function App() {
                 </button>
                 <div
                   id="genderUIDropdown"
-                  className="hidden p-2 w-40 md:w-56 bg-white absolute top-52 rounded-lg"
+                  className="hidden p-2 w-[44vw] md:w-56 bg-white absolute rounded-lg"
                 >
                   <ul className="">
                     <li className="flex space-x-2 items-center">
@@ -482,6 +483,11 @@ function App() {
                 ></Card>
               );
             })}
+        </div>
+
+        <div className="flex justify-between my-8">
+          <button type="button" className="p-2 bg-blue-500 text-white rounded-md disabled:bg-blue-300" onClick={()=>{setPageOffset(pageOffset - 18)}} disabled={ (pageOffset > 0)?false:true }>Previous</button>
+          <button type="button" className="p-2 bg-blue-500 text-white rounded-md disabled:bg-blue-300" onClick={()=>{setPageOffset(pageOffset + 18)}} disabled={ (pageOffset >= (1261))?true:false }>Next</button>
         </div>
       </div>
     </>
