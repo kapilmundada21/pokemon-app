@@ -137,7 +137,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-6">
-            <div className="flex justify-between h-12">
+            <div className="flex justify-between h-fit">
               <div className="font-bold font-sans text-2xl">
                 {pokemon.name && pokemon.name.toUpperCase()}
               </div>
