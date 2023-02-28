@@ -137,7 +137,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-6">
-            <div className="flex justify-between h-1/3">
+            <div className="flex justify-between h-12">
               <div className="font-bold font-sans text-2xl">
                 {pokemon.name && pokemon.name.toUpperCase()}
               </div>
@@ -146,7 +146,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
                 {("000" + pokemon.id).slice(-3)}
               </div>
 
-              <div className="grid grid-cols-3 gap-x-2 text-2xl">
+              <div className="grid grid-cols-3 gap-x-2 text-2xl ">
                 <button>
                   <BsArrowLeftCircle onClick={changeToPreviousCard}/>
                 </button>
@@ -162,9 +162,10 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
             <div className="flex flex-wrap max-w-xl">
               <p>
                 {pokemon.flavorTexts && shortenedText(pokemon.flavorTexts)}
-                <Link className="" href="#text-buttons" onClick={openPopover}>
+                {pokemon.flavorTexts && pokemon.flavorTexts.length >420 && <Link className="" href="#text-buttons" onClick={openPopover}>
                   read more
-                </Link>
+                </Link>}
+                
               </p>
             </div>
           </div>
@@ -270,7 +271,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
                       <div
                         className={`object-cover px-2 text-xs text-white bg-[#2e3156]
  `}
-                        style={{ width: stat.base_stat + "%" }}
+                        style={{ width: stat.base_stat>100? "100%" : stat.base_stat+"%"}}
                       >
                         {stat.base_stat}
                       </div>
