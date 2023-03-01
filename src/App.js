@@ -66,6 +66,7 @@ function App() {
           })
       )
     );
+    window.scrollTo(0,0)
   };
 
   const toggleModel = (event) => {
@@ -87,6 +88,7 @@ function App() {
         get[i].checked = false;
       }
     }
+   
   };
 
   const previousModal=()=>{ 
