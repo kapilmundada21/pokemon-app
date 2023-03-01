@@ -66,6 +66,7 @@ function App() {
           })
       )
     );
+    window.scrollTo(0,0)
   };
 
   const toggleModel = (event) => {

@@ -10,10 +10,12 @@ import {
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
   const [pokemon, setPokemon] = useState({});
   const [anchor, setAnchor] = useState(null);
+  const [loading, setLoading] = useState(true);
   const openPopover = (event) => {
     setAnchor(event.target.parentNode.parentNode.parentNode.parentNode);
   };
@@ -30,6 +32,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
   const changeToNextCard=()=>{onNextCard();}
 
   useEffect(() => {
+    setLoading(true)
     fetchPokemonData(pokemonName);
     // eslint-disable-next-line
   }, [pokemonName]);
@@ -64,6 +67,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
       stats,
     }))(pokemonInformation);
 
+
     let speciesInfo = await (await fetch(pokemonInfo.species.url)).json();
 
     pokemonInfo["egg_groups"] = speciesInfo.egg_groups.map((egg_group) => {
@@ -95,6 +99,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
         : null;
     }
     setPokemon(pokemonInfo);
+    setLoading(false)
     // console.log(pokemonInfo);
   };
 
@@ -130,7 +135,9 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
 
   return (
     <div className="modal fade fixed inset-0 overflow-auto overscroll-none bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-center z-50">
-      <div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative text-[#2e3159]">
+      <div className="flex h-screen items-center"
+      >{loading && <CircularProgress /> }</div>
+      {!loading && (<div className="bg-[#deeded] bg-opacity-90 p-4 md:p-10 h-fit max-w-3xl modal-dialog modal-dialog-scrollable relative text-[#2e3159]">
         <div className="flex flex-col-reverse md:flex-row justify-center pb-2">
           <div className="flex md:w-2/5 md:mr-10 justify-center items-center">
             <Card pokemonInfo={{ id: pokemon.id }} image={pokemon.image}></Card>
@@ -309,7 +316,7 @@ export const Model = ({ pokemonName, onClose,onPreviousCard,onNextCard }) => {
               })}
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };
