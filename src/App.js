@@ -493,7 +493,7 @@ function App() {
 
         <div className="flex justify-between my-8 items-center">
           <button type="button" className="p-2 bg-blue-500 text-white rounded-md disabled:bg-blue-300" onClick={()=>{setPageOffset(pageOffset - 18)}} disabled={ (pageOffset > 0)?false:true }>Previous</button>
-          <Pagination count={Math.ceil(totalCount/18)} color="primary" onChange={handlePageChange}/>
+          <Pagination count={Math.ceil(totalCount/18)} color="primary" onChange={handlePageChange} page={(pageOffset/18)+1}/>
           
           <button type="button" className="p-2 bg-blue-500 text-white rounded-md disabled:bg-blue-300" onClick={()=>{setPageOffset(pageOffset + 18)}} disabled={ (pageOffset >= (1261))?true:false }>Next</button>
         </div>
